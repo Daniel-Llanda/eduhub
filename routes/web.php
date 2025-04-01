@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
 use App\Models\Admin;
@@ -36,15 +37,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/delete-post/{id}', [UserController::class, 'delete_post'])->name('delete_post');
     Route::get('/delete-file/{id}', [UserController::class, 'delete_files'])->name('delete_file');
 
-    
-
     Route::post('/add-files', [UserController::class, 'add_files'])->name('add_files');
 
-
     Route::post('/comment/{user_id}/{post_id}', [UserController::class, 'add_comment'])->name('add_comment');
-
-
-    
 
     Route::get('/my-uploads', [UserController::class, 'myUploads'])->name('my_uploads');
     Route::get('/account', [UserController::class, 'account'])->name('account');
@@ -88,8 +83,12 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/status/{id}', [AdminController::class, 'status_update'])->name('admin.status_update');
     Route::post('/admin/assign-teacher', [AdminController::class, 'assign_teacher'])->name('admin.assign_teacher');
 
-    // Route::get('/profile', [AdminProfileController::class, 'edit'])->name('admin.profile.edit');
-    // Route::patch('/profile', [AdminProfileController::class, 'update'])->name('admin.profile.update');
+    Route::get('/admin/teacher', [AdminController::class, 'teacher'])->name('admin.teacher');
+
+    Route::post('/admin/add-teacher', [AdminController::class, 'add_teacher'])->name('admin.teacher.register');
+
+    Route::get('/admin-profile', [AdminProfileController::class, 'edit'])->name('admin.profile.edit');
+    Route::patch('/admin-profile', [AdminProfileController::class, 'update'])->name('admin.profile.update');
     // Route::delete('/profile', [AdminProfileController::class, 'destroy'])->name('admin.profile.destroy');
 });
 
@@ -100,11 +99,13 @@ Route::middleware('auth:teacher')->group(function () {
     Route::get('/teacher/dashboard', [TeacherController::class, 'index'])->name('teacher.dashboard');
     Route::get('/teacher/approved-post/{id}', [TeacherController::class, 'approved_post'])->name('teacher.approved_post');
     Route::get('/teacher/denied-post/{id}', [TeacherController::class, 'denied_post'])->name('teacher.denied_post');
+
+    Route::get('/teacher/student', [TeacherController::class, 'student'])->name('teacher.student');
     
     
     
-    // Route::get('/profile', [AdminProfileController::class, 'edit'])->name('admin.profile.edit');
-    // Route::patch('/profile', [AdminProfileController::class, 'update'])->name('admin.profile.update');
+    Route::get('/teacher-profile', [AdminProfileController::class, 'edit'])->name('teacher.profile.edit');
+    Route::patch('/teacher-profile', [AdminProfileController::class, 'update'])->name('teacher.profile.update');
     // Route::delete('/profile', [AdminProfileController::class, 'destroy'])->name('admin.profile.destroy');
 });
 

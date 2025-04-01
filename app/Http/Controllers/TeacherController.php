@@ -13,16 +13,17 @@ class TeacherController extends Controller
     public function index(){
         $teacher = Auth::user();
     
-        // Get users related to the authenticated teacher
-        $users = User::where('teacher', $teacher->id)->get();
+        // Get users where the teacher's ID exists in the JSON column
+        $users = User::whereJsonContains('teacher', strval($teacher->id))->get();
     
-        // Get only pending posts that belong to the teacher's users
+        // Get pending posts that belong to the teacher's users
         $posts = Post::where('permission_post', 'pending')
-                    ->whereIn('user_id', $users->pluck('id')) // Get posts only for these users
+                    ->whereIn('user_id', $users->pluck('id')) 
                     ->get();
     
         return view('teacher.dashboard', compact('users', 'posts'));
     }
+    
     
     
     public function approved_post($id){
@@ -39,6 +40,19 @@ class TeacherController extends Controller
         $post->save();
 
         return redirect()->back()->with('success', 'Denied post successfully.');
+    }
+    public function student(){
+        $teacher = Auth::user();
+    
+        // Get users where the teacher's ID exists in the JSON column
+        $users = User::whereJsonContains('teacher', strval($teacher->id))->get();
+    
+        // Get pending posts that belong to the teacher's users
+        $posts = Post::where('permission_post', 'pending')
+                    ->whereIn('user_id', $users->pluck('id')) 
+                    ->get();
+    
+        return view('teacher.student', compact('users', 'posts'));
     }
 
     

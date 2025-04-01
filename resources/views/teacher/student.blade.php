@@ -182,44 +182,18 @@
 <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.2.2/js/dataTables.bootstrap5.js"></script>
 
-
+<style>
+    img{
+        height: 50px;
+    }
+</style>
 
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Dashboard</h1>
+    <h1 class="mt-4">Student</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">Dashboard</li>
+        <li class="breadcrumb-item active">Student</li>
     </ol>
     <div class="row">
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-primary text-white mb-4">
-                <div class="card-body display-4 text-center">11</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <span class="small text-white">Student</span>
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-success text-white mb-4">
-                <div class="card-body display-4 text-center">13</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <span class="small text-white">Post</span>
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-danger text-white mb-4">
-                <div class="card-body display-4 text-center">9</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <span class="small text-white">Ban Student</span>
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    
-                </div>
-            </div>
-        </div>
     </div>
     <div class="card mb-4">
         <div class="card-header">
@@ -232,7 +206,9 @@
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Status</th>
+                        <th>Thumbnail</th>
+                        <th>Post</th>
+                        <th>Action</th>
                         
                     </tr>
                 </thead>
@@ -240,23 +216,57 @@
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Status</th>
-                      
+                        <th>Thumbnail</th>
+                        <th>Post</th>
+                        <th>Action</th>
                     </tr>
                 </tfoot>
                 <tbody>
-                    @foreach ($users as $user)
-                        <tr >
-                            <td >
-                                {{$user->name}}
+                    @foreach ($posts as $post)
+                        <tr>
+                            <td>
+                                {{$post->user->name}}
                             </td>
                             <td>
-                                {{$user->email}}
+                                {{$post->user->email}}
                             </td>
-                            <td >
-                                {{$user->status}}
-                                
-                                
+                            <td>
+                                <img src="{{ asset('uploads/' . $post->thumbnail) }}">  
+                            </td>
+                            <td>
+                                @foreach ($post->files as $file)
+                                @php
+                                $extension = pathinfo($file->file_name, PATHINFO_EXTENSION);
+                            @endphp
+                            
+                            @if (in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif', 'webp']))
+                                <img src="{{ asset('uploads/' . $file->file_name) }}">
+                            @elseif (in_array(strtolower($extension), ['pdf']))
+                                <a href="{{ asset('uploads/' . $file->file_name) }}" target="_blank">
+                                    <img src="{{ asset('icons/pdf.png') }}">
+                                </a>
+                            @elseif (in_array(strtolower($extension), ['doc', 'docx']))
+                                <a href="{{ asset('uploads/' . $file->file_name) }}" target="_blank">
+                                    <img src="{{ asset('icons/doc.png') }}">
+                                </a>
+                            @elseif (in_array(strtolower($extension), ['ppt', 'pptx']))
+                                <a href="{{ asset('uploads/' . $file->file_name) }}" target="_blank">
+                                    <img src="{{ asset('icons/ppt.png') }}">
+                                </a>
+                            @elseif (in_array(strtolower($extension), ['xlsx']))
+                                <a href="{{ asset('uploads/' . $file->file_name) }}" target="_blank">
+                                    <img src="{{ asset('icons/xls.png') }}">
+                                </a>
+                            @else
+                                <a href="{{ asset('uploads/' . $file->file_name) }}" target="_blank">
+                                    <img src="{{ asset('icons/apk.png') }}">
+                                </a>
+                            @endif
+                                @endforeach
+                            </td>
+                            <td>
+                                <a href="{{route('teacher.approved_post',$post->id)}}" class="approved_btn btn btn-success btn-sm" data-url="{{ route('teacher.approved_post', $post->id) }}">Approved</a>
+                                <a href="{{route('teacher.denied_post',$post->id)}}" class="denied_btn btn btn-danger btn-sm" data-url="{{ route('teacher.denied_post', $post->id) }}">Denied</a>
                             </td>
                         </tr>
                     @endforeach
@@ -269,7 +279,24 @@
 <script>
     $(document).ready( function () {
         $('#myTable').DataTable();
-        $('.js-example-basic-multiple').select2();
+        $('.approved_btn').click(function(e) {
+            e.preventDefault();
+                
+            let approvedUrl = $(this).data('url'); 
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This action cannot be undone!",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, approved it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = approvedUrl; 
+                }
+            });
+        });
     });
 </script>
 

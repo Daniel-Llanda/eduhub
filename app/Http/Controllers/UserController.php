@@ -42,14 +42,15 @@ class UserController extends Controller
         return view('my_uploads', compact('userFiles'));
     }
     public function upload_post(Request $request) {
-        $request->validate([
-            'title' => 'required', 
-            'tags' => 'required', 
-            'pricing' => 'required|in:free,premium',
-            'thumbnail' => 'required|mimes:jpg,jpeg,png|max:2048',
-            'upload_files.*' => 'required|mimes:jpg,jpeg,png,pdf,docx,xlsx,mp4|max:2048',
-        ]);
-
+        // $request->validate([
+        //     'title' => 'required', 
+        //     'tags' => 'required', 
+        //     'pricing' => 'required|in:free,premium',
+        //     'thumbnail' => 'required|mimes:jpg,jpeg,png|max:2048',
+        //     'upload_files.*' => 'required|mimes:jpg,jpeg,png,pdf,docx,xlsx,mp4|max:2048',
+        // ]);
+      
+        // dd($request->pricing);
         $thumbnailName = null;
         if ($request->hasFile('thumbnail')) {
             $thumbnail = $request->file('thumbnail');
@@ -79,6 +80,7 @@ class UserController extends Controller
     
         return back()->with('success', 'Post uploaded successfully.');
     }
+    
     
     public function post_info($id){
         $post_info = Post::find($id);
