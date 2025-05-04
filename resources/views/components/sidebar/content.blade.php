@@ -27,20 +27,46 @@
     <x-sidebar.link
         title="Account"
         href="{{ route('account') }}"
-        :isActive="request()->routeIs('account')"
+        :isActive="request()->routeIs('account') ||  request()->routeIs('account_file')"
     >
         <x-slot name="icon">
             <x-icons.account class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
         </x-slot>
     </x-sidebar.link>
+    @php
+        $permissions = \App\Models\Permission::where('receiver_id', Auth::id())
+            ->where('permission_status', 0)
+            ->with(['requester', 'post'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+    @endphp
 
     <x-sidebar.link
-        title="Chat"
-        href="{{ route('chat_room') }}"
-        :isActive="request()->routeIs('chat_room')"
+        title="Notification"
+        href="{{ route('notification') }}"
+        :isActive="request()->routeIs('notification')"
     >
         <x-slot name="icon">
-            <x-icons.chat class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
+            <div class="relative">
+                <x-icons.notification class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
+
+                {{-- Red dot if pending permissions exist --}}
+                @if ($permissions->isNotEmpty())
+                    <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                @endif
+            </div>
+        </x-slot>
+    </x-sidebar.link>
+
+
+
+    <x-sidebar.link
+        title="Favorites"
+        href="{{ route('favorites') }}"
+        :isActive="request()->routeIs('favorites')"
+    >
+        <x-slot name="icon">
+            <x-icons.favorites class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
         </x-slot>
     </x-sidebar.link>
 

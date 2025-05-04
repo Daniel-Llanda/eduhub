@@ -1,174 +1,3 @@
-{{-- @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-
-<h1 class="text-2xl">hello {{Auth::user()->name}}</h1>
-<div class="p-6 overflow-hidden bg-white rounded-md shadow-md dark:bg-dark-eval-1">
-<div class="relative overflow-x-auto">
-    <table id="item-table" class=" table sm:text-xs lg:text-sm table-auto w-full bg-green-600">
-        <thead class="text-xs ">
-            <tr>
-                <th scope="col" class="px-4 py-2">Name</th>
-                <th scope="col" class="px-4 py-2">Email</th>
-                <th scope="col" class="px-4 py-2">Post</th> 
-                <th scope="col" class="px-4 py-2">Action</th>
-                
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($posts as $post)
-                <tr class="bg-white border-b hover:bg-gray-50">
-                    <td scope="row" class="px-6 py-4 font-medium text-black white space-nowrap">
-                        {{$post->user->name}}
-                    </td>
-                    <td scope="row" class="px-6 py-4 font-medium text-black white space-nowrap">
-                        {{$post->user->email}}
-                    </td>
-                    <td scope="row" class="px-6 py-4 font-medium text-black white space-nowrap">
-                        {{$post->permission_post}}
-                    </td>
-                    <td scope="row" class="px-6 py-4 font-medium space-nowrap">
-                        <a href="{{route('teacher.approved_post',$post->id)}}" class="bg-green-500 px-2 py-1">APPROVED</a>
-                        <a href="{{route('teacher.denied_post',$post->id)}}" class="bg-red-500 px-2 py-1">DENEID</a>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
-</div>
-<div class="p-6 overflow-hidden bg-white rounded-md shadow-md dark:bg-dark-eval-1">
-<div class="relative overflow-x-auto">
-    <table id="item-table" class=" table sm:text-xs lg:text-sm table-auto w-full bg-green-600">
-        <thead class="text-xs ">
-            <tr>
-                <th scope="col" class="px-4 py-2">Name</th>
-                <th scope="col" class="px-4 py-2">Email</th>
-                <th scope="col" class="px-4 py-2">Status</th>
-                
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($users as $user)
-                <tr class="bg-white border-b hover:bg-gray-50">
-                    <td scope="row" class="px-6 py-4 font-medium text-black white space-nowrap">
-                        {{$user->name}}
-                    </td>
-                    <td scope="row" class="px-6 py-4 font-medium text-black white space-nowrap">
-                        {{$user->email}}
-                    </td>
-                    <td scope="row" class="px-6 py-4 font-medium space-nowrap">
-                        {{$user->id}}
-                        
-                        
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
-</div>
-<form method="POST" action="{{ route('teacher.logout') }}">
-@csrf
-
-<x-dropdown-link
-    :href="route('teacher.logout')"
-    onclick="event.preventDefault(); this.closest('form').submit();"
->
-    {{ __('Log Out') }}
-</x-dropdown-link>
-</form> --}}
-
-{{-- 
-<x-slot name="header">
-    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <h2 class="text-xl font-semibold leading-tight">
-            {{ __('Admin') }}
-        </h2>
-    </div>
-</x-slot> --}}
-{{-- @vite(['resources/css/app.css', 'resources/js/app.js'])
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-
-<div class="p-6 overflow-hidden bg-white rounded-md shadow-md dark:bg-dark-eval-1">
-    <div class="relative overflow-x-auto">
-        <table id="item-table" class=" table sm:text-xs lg:text-sm table-auto w-full bg-green-600">
-            <thead class="text-xs ">
-                <tr>
-                    <th scope="col" class="px-4 py-2">Name</th>
-                    <th scope="col" class="px-4 py-2">Email</th>
-                    <th scope="col" class="px-4 py-2">Status</th>
-                    <th scope="col" class="px-4 py-2">Assigned Teacher</th>
-                    
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($users as $user)
-                    <tr class="bg-white border-b hover:bg-gray-50">
-                        <td scope="row" class="px-6 py-4 font-medium text-black white space-nowrap">
-                            {{$user->name}}
-                        </td>
-                        <td scope="row" class="px-6 py-4 font-medium text-black white space-nowrap">
-                            {{$user->email}}
-                        </td>
-                        <td scope="row" class="px-6 py-4 font-medium space-nowrap">
-                            @if ($user->status == "not_verified")
-                                <a href="{{route('admin.status_update', $user->id)}}" class="bg-red-500 p-1">Not Verified</a>
-                            @else
-                                <a href="#" class="bg-green-500">Verified</a>
-                            @endif
-                            <a href="{{route('admin.status_update', $user->id)}}" class="text-white bg-{{$user->status ? 'green' : 'red'}}-500 hover:bg-{{$user->status ? 'green' : 'red'}}-400 focus:ring-4 focus:outline-none focus:ring-{{$user->status ? 'green' : 'red'}}-300 rounded-lg lg:p-3 p-2 text-center text-sm">{{$user->status ? 'Verified' : 'Not Verified'}}</a>
-                            <form action="{{ route('admin.assign_teacher') }}" method="POST">
-                                @csrf
-                                <select name="teacher_id" required>
-                                    <option selected disabled>Teachers</option>
-                                    @foreach ($teachers as $teacher)
-                                        <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
-                                    @endforeach
-                                </select>
-                                <select class="js-example-basic-multiple" name="teacher_id[]" multiple="multiple">
-                                    @foreach ($teachers as $teacher)
-                                        <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
-                                    @endforeach
-                                    
-                                </select>
-                                <input type="hidden" name="user_id" value="{{ $user->id }}">
-                                <button class="bg-red-500" type="submit">Assign</button>
-                            </form>
-                            
-                        </td>
-                        <td scope="row" class="px-6 py-4 font-medium text-black white space-nowrap">
-                            @php
-                                $teacherName = \App\Models\Teacher::where('id', $user->teacher)->value('name');
-                            @endphp
-                            
-                            {{ $teacherName ?? 'No teacher found' }}
-                        
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
-<script>
-    $(document).ready(function() {
-        $('.js-example-basic-multiple').select2();
-    });
-</script>
-<form method="POST" action="{{ route('admin.logout') }}">
-    @csrf
-
-    <x-dropdown-link
-        :href="route('admin.logout')"
-        onclick="event.preventDefault(); this.closest('form').submit();"
-    >
-        {{ __('Log Out') }}
-    </x-dropdown-link>
-</form>
---}}
 @extends('teacher.layout.app')
 @section('main_teacher')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -193,92 +22,239 @@
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active">Student</li>
     </ol>
-    <div class="row">
-    </div>
+   
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
             Students
         </div>
-        <div class="card-body">
-            <table id="myTable"  class="table table-striped" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Thumbnail</th>
-                        <th>Post</th>
-                        <th>Action</th>
-                        
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Thumbnail</th>
-                        <th>Post</th>
-                        <th>Action</th>
-                    </tr>
-                </tfoot>
-                <tbody>
-                    @foreach ($posts as $post)
-                        <tr>
-                            <td>
-                                {{$post->user->name}}
-                            </td>
-                            <td>
-                                {{$post->user->email}}
-                            </td>
-                            <td>
-                                <img src="{{ asset('uploads/' . $post->thumbnail) }}">  
-                            </td>
-                            <td>
-                                @foreach ($post->files as $file)
-                                @php
-                                $extension = pathinfo($file->file_name, PATHINFO_EXTENSION);
-                            @endphp
+    
+        <div class="card-body p-3">
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-post-tab" data-bs-toggle="pill" data-bs-target="#pills-post" type="button" role="tab" aria-controls="pills-post" aria-selected="true">Post</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-history-tab" data-bs-toggle="pill" data-bs-target="#pills-history" type="button" role="tab" aria-controls="pills-history" aria-selected="false">History</button>
+                </li>
+            
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-post" role="tabpanel" aria-labelledby="pills-post-tab">
+                    <table id="myTable"  class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Thumbnail</th>
+                                <th>Post</th>
+                                <th>Action</th>
+                                
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Thumbnail</th>
+                                <th>Post</th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @foreach ($posts as $post)
+                                <tr>
+                                    <td>
+                                        {{$post->user->name}}
+                                    </td>
+                                    <td>
+                                        {{$post->user->email}}
+                                    </td>
+                                    <td>
+                                        <img src="{{ asset('uploads/' . $post->thumbnail) }}">  
+                                    </td>
+                                    <td>
+                                        @foreach ($post->files as $file)
+                                        @php
+                                        $extension = pathinfo($file->file_name, PATHINFO_EXTENSION);
+                                    @endphp
+                                    
+                                    @if (in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif', 'webp']))
+                                        <img src="{{ asset('uploads/' . $file->file_name) }}">
+                                    @elseif (in_array(strtolower($extension), ['pdf']))
+                                        <a href="{{ asset('uploads/' . $file->file_name) }}" target="_blank">
+                                            <img src="{{ asset('icons/pdf.png') }}">
+                                        </a>
+                                    @elseif (in_array(strtolower($extension), ['doc', 'docx']))
+                                        <a href="{{ asset('uploads/' . $file->file_name) }}" target="_blank">
+                                            <img src="{{ asset('icons/doc.png') }}">
+                                        </a>
+                                    @elseif (in_array(strtolower($extension), ['ppt', 'pptx']))
+                                        <a href="{{ asset('uploads/' . $file->file_name) }}" target="_blank">
+                                            <img src="{{ asset('icons/ppt.png') }}">
+                                        </a>
+                                    @elseif (in_array(strtolower($extension), ['xlsx']))
+                                        <a href="{{ asset('uploads/' . $file->file_name) }}" target="_blank">
+                                            <img src="{{ asset('icons/xls.png') }}">
+                                        </a>
+                                    @else
+                                        <a href="{{ asset('uploads/' . $file->file_name) }}" target="_blank">
+                                            <img src="{{ asset('icons/apk.png') }}">
+                                        </a>
+                                    @endif
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @php
+                                            $teacher_approval = App\Models\PermissionPost::where('post_id', $post->id)
+                                                                ->where('teacher_id', Auth::user()->id)
+                                                                ->exists();
+                                            $user = App\Models\User::findOrFail($post->user->id);
+
+                                            // Decode the teacher field (assuming it's stored as a JSON array)
+                                            $teacherIds = json_decode($user->teacher, true);
+
+                                            // Count how many teacher IDs are there
+                                            $teacherCount = is_array($teacherIds) ? count($teacherIds) : 0;
+                                            $permission_count = App\Models\PermissionPost::where('post_id', $post->id)->count();
+                                        @endphp
+                                        @if (!$teacher_approval)
+                                            <a href="#" class="approved_btn btn btn-success btn-sm" data-url="{{ route('teacher.approved_post',[$post->user->id, Auth::user()->id ,$post->id]) }}">Approved</a>
+                                            <button type="button" class="denied_btn btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deniedModal" data-user_name="{{$post->user->name}}"  data-user_id="{{$post->user->id}}" data-teacher_id="{{ Auth::user()->id}}" data-post_id="{{$post->id}}">
+                                                Denied
+                                            </button>
+                                            {{-- <a href="{{route('teacher.denied_post',$post->id)}}" class="denied_btn btn btn-danger btn-sm" data-url="{{ route('teacher.denied_post', $post->id) }}">Denied</a> --}}
+                                            <p>
+                                                @if ($permission_count != 0)
+                                                    <small>{{ $permission_count}}/{{$teacherCount}} responses submitted.</small>
+                                                @endif
+                                              
+                                            </p>
+                                        @else
+                                            <p class="text-success">Response submitted. </p>
+                                            <p><small>Awaiting others ({{ $permission_count}}/{{$teacherCount}}  approvals).</small></p>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
                             
-                            @if (in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif', 'webp']))
-                                <img src="{{ asset('uploads/' . $file->file_name) }}">
-                            @elseif (in_array(strtolower($extension), ['pdf']))
-                                <a href="{{ asset('uploads/' . $file->file_name) }}" target="_blank">
-                                    <img src="{{ asset('icons/pdf.png') }}">
-                                </a>
-                            @elseif (in_array(strtolower($extension), ['doc', 'docx']))
-                                <a href="{{ asset('uploads/' . $file->file_name) }}" target="_blank">
-                                    <img src="{{ asset('icons/doc.png') }}">
-                                </a>
-                            @elseif (in_array(strtolower($extension), ['ppt', 'pptx']))
-                                <a href="{{ asset('uploads/' . $file->file_name) }}" target="_blank">
-                                    <img src="{{ asset('icons/ppt.png') }}">
-                                </a>
-                            @elseif (in_array(strtolower($extension), ['xlsx']))
-                                <a href="{{ asset('uploads/' . $file->file_name) }}" target="_blank">
-                                    <img src="{{ asset('icons/xls.png') }}">
-                                </a>
-                            @else
-                                <a href="{{ asset('uploads/' . $file->file_name) }}" target="_blank">
-                                    <img src="{{ asset('icons/apk.png') }}">
-                                </a>
-                            @endif
-                                @endforeach
-                            </td>
-                            <td>
-                                <a href="{{route('teacher.approved_post',$post->id)}}" class="approved_btn btn btn-success btn-sm" data-url="{{ route('teacher.approved_post', $post->id) }}">Approved</a>
-                                <a href="{{route('teacher.denied_post',$post->id)}}" class="denied_btn btn btn-danger btn-sm" data-url="{{ route('teacher.denied_post', $post->id) }}">Denied</a>
-                            </td>
-                        </tr>
-                    @endforeach
-                    
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="pills-history" role="tabpanel" aria-labelledby="pills-history-tab">
+                    <table id="myTableHistory"  class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Thumbnail</th>
+                                <th>Post</th>
+                                <th>Permission</th>
+                                
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Thumbnail</th>
+                                <th>Post</th>
+                                <th>Permission</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @foreach ($posts_history as $post)
+                                <tr>
+                                    <td>
+                                        {{$post->user->name}}
+                                    </td>
+                                    <td>
+                                        {{$post->user->email}}
+                                    </td>
+                                    <td>
+                                        <img src="{{ asset('uploads/' . $post->thumbnail) }}">  
+                                    </td>
+                                    <td>
+                                        @foreach ($post->files as $file)
+                                        @php
+                                                $extension = pathinfo($file->file_name, PATHINFO_EXTENSION);
+                                            @endphp
+                                            
+                                            @if (in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif', 'webp']))
+                                                <img src="{{ asset('uploads/' . $file->file_name) }}">
+                                            @elseif (in_array(strtolower($extension), ['pdf']))
+                                                <a href="{{ asset('uploads/' . $file->file_name) }}" target="_blank">
+                                                    <img src="{{ asset('icons/pdf.png') }}">
+                                                </a>
+                                            @elseif (in_array(strtolower($extension), ['doc', 'docx']))
+                                                <a href="{{ asset('uploads/' . $file->file_name) }}" target="_blank">
+                                                    <img src="{{ asset('icons/doc.png') }}">
+                                                </a>
+                                            @elseif (in_array(strtolower($extension), ['ppt', 'pptx']))
+                                                <a href="{{ asset('uploads/' . $file->file_name) }}" target="_blank">
+                                                    <img src="{{ asset('icons/ppt.png') }}">
+                                                </a>
+                                            @elseif (in_array(strtolower($extension), ['xlsx']))
+                                                <a href="{{ asset('uploads/' . $file->file_name) }}" target="_blank">
+                                                    <img src="{{ asset('icons/xls.png') }}">
+                                                </a>
+                                            @else
+                                                <a href="{{ asset('uploads/' . $file->file_name) }}" target="_blank">
+                                                    <img src="{{ asset('icons/apk.png') }}">
+                                                </a>
+                                            @endif
+                                        @endforeach
+                                    </td>
+                                    <td class="uppercase">
+                                        {{$post->permission_post}}
+                                    </td>
+                                </tr>
+                            @endforeach
+                            
+                        </tbody>
+                    </table>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="deniedModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Denied Reason</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{route('teacher.denied_post')}}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <p>Recipient: <span id="recipient_name"></span></p>
+                    </div>
+                    <div class="mb-3">
+                        <label for="permission_note" class="col-form-label">Reason:</label>
+                        <textarea class="form-control" id="permission_note" name="permission_note"></textarea>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                    <input type="text" id="user_id" name="user_id" hidden>
+                    <input type="text" id="teacher_id" name="teacher_id" hidden>
+                    <input type="text" id="post_id" name="post_id" hidden>
+
+                </form>
+            </div>
+            
         </div>
     </div>
 </div>
 <script>
     $(document).ready( function () {
         $('#myTable').DataTable();
+        $('#myTableHistory').DataTable();
         $('.approved_btn').click(function(e) {
             e.preventDefault();
                 
@@ -296,6 +272,19 @@
                     window.location.href = approvedUrl; 
                 }
             });
+        });
+        $('.denied_btn').click(function(e) {
+            let user_id = $(this).data('user_id'); 
+            let user_name = $(this).data('user_name'); 
+            let teacher_id = $(this).data('teacher_id'); 
+            let post_id = $(this).data('post_id'); 
+
+            $('#user_id').val(user_id)
+            $('#recipient_name').text(user_name)
+            $('#teacher_id').val(teacher_id)
+            $('#post_id').val(post_id)
+            console.log(user_id,teacher_id,post_id);
+            
         });
     });
 </script>

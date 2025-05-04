@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+use App\Models\Setting;
 use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,7 +17,8 @@ class AdminController extends Controller
         // return view('admin.dashboard', compact('users'));
         $users = User::all();
         $teachers = Teacher::all();
-        return view('admin.dashboard', compact('users', "teachers"));
+        $posts = Post::all();
+        return view('admin.dashboard', compact('users', "teachers", "posts"));
     }
     public function status_update($id){
         $user = User::find($id);
@@ -62,6 +65,45 @@ class AdminController extends Controller
         ]);
         return redirect()->back()->with('success', 'Added Teacher successfully.');
         
+    }
+    public function settings(){
+        $file_info = Setting::first(); // Get the only settings row
+        return view('admin.settings', compact('file_info'));
+    }
+    public function file_size(Request $request) {
+        $setting = Setting::first();
+
+        if ($setting) {
+            // If it exists, update it
+            $setting->update([
+                'file_size' => $request->file_size,
+            ]);
+        } else {
+            // If it doesn't exist, create it
+            Setting::create([
+                'file_size' => $request->file_size,
+            ]);
+        }
+
+        return back()->with('success', 'File size updated successfully!');
+    }
+    
+    public function file_resolution(Request $request){
+        $setting = Setting::first();
+
+        if ($setting) {
+            // If it exists, update it
+            $setting->update([
+                'file_size' => $request->file_size,
+            ]);
+        } else {
+            // If it doesn't exist, create it
+            Setting::create([
+                'file_resolution' => $request->file_resolution,
+            ]);
+        }
+
+        return back()->with('success', 'File size updated successfully!');
     }
     
     

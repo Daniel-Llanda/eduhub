@@ -1,89 +1,3 @@
-{{-- <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="icon" type="image/png" href="{{ asset('east_logo.png') }}">
-
-
-    <title>{{ config('app.name', 'K UI') }}</title>
-    <script src="/source/js/sweetalert2@11.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
-
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
-    <!-- jQuery CDN -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
-
-
-    <!-- Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet" />
-
-    <!-- Styles -->
-    <style>
-        [x-cloak] {
-            display: none;
-        }
-        * {
-            scrollbar-width: none;
-        }
-
-        *::-webkit-scrollbar {
-            display: none;
-        }
-    </style>
-
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<body class="font-sans antialiased">
-    <div
-        x-data="mainState"
-        :class="{ dark: isDarkMode }"
-        x-on:resize.window="handleWindowResize"
-        x-cloak
-    >
-        <div class="min-h-screen text-gray-900 bg-gray-100 dark:bg-dark-eval-0 dark:text-gray-200">
-            <!-- Sidebar -->
-            <x-sidebar.sidebar />
-
-            <!-- Page Wrapper -->
-            <div
-                class="flex flex-col min-h-screen"
-                :class="{
-                    'lg:ml-64': isSidebarOpen,
-                    'md:ml-16': !isSidebarOpen
-                }"
-                style="transition-property: margin; transition-duration: 150ms;"
-            >
-
-                <!-- Navbar -->
-                <x-navbar />
-
-                <!-- Page Heading -->
-                <header>
-                    <div class="p-4 sm:p-6">
-                        {{ $header }}
-                    </div>
-                </header>
-
-                <!-- Page Content -->
-                <main class="px-4 sm:px-6 flex-1">
-                    {{ $slot }}
-                </main>
-
-                <!-- Page Footer -->
-                <x-footer />
-            </div>
-        </div>
-    </div>
-</body>
-</html> --}}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -99,6 +13,7 @@
 
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <style>
               * {
                 scrollbar-width: none;
@@ -150,17 +65,26 @@
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
                             <a class="nav-link {{ request()->routeIs('teacher.dashboard') ? 'text-white' : '' }}" href="{{ route('teacher.dashboard') }}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                <div class="sb-nav-link-icon"><i class="bi bi-speedometer2"></i></div>
                                 Dashboard
                             </a>
                             <a class="nav-link {{ request()->routeIs('teacher.student') ? 'text-white' : '' }}" href="{{ route('teacher.student') }}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-user-circle"></i></div>
+                                <div class="sb-nav-link-icon"><i class="bi bi-person-circle"></i></div>
                                 Student
                             </a>
-                            <a class="nav-link {{ request()->is('index.html') ? 'text-white' : '' }}" href="index.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-image"></i></div>
-                                Post
+                            <a class="nav-link {{ request()->routeIs('teacher.student_post', 'teacher.student_post_info') ? 'text-white' : '' }}" href="{{ route('teacher.student_post') }}">
+                                <div class="sb-nav-link-icon"><i class="bi bi-file-post"></i></div>
+                                Student Post
                             </a>
+                            <a class="nav-link {{ request()->routeIs('teacher.upload_post') ? 'text-white' : '' }}" href="{{ route('teacher.upload_post') }}">
+                                <div class="sb-nav-link-icon"><i class="bi bi-image"></i></div>
+                                Upload
+                            </a>
+                            <a class="nav-link {{ request()->routeIs('teacher.post_favorites') ? 'text-white' : '' }}" href="{{ route('teacher.post_favorites') }}">
+                                <div class="sb-nav-link-icon"><i class="bi bi-bookmark"></i></div>
+                                Favorites
+                            </a>
+                            
                             
                         </div>
                     </div>
@@ -175,21 +99,9 @@
                     @yield('main_teacher')
                     
                 </main>
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; File Management 2025</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+                
             </div>
         </div>
-        {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script> --}}
         <script src="{{ asset('source/js/scripts.js') }}"></script>
     </body>
 </html>

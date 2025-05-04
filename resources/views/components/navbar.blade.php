@@ -115,14 +115,14 @@
         'translate-y-0': scrollingUp,
     }"
 >
-    <x-button
+    {{-- <x-button
         type="button"
         icon-only
         variant="secondary"
         sr-text="Search"
     >
         <x-heroicon-o-search aria-hidden="true" class="w-6 h-6" />
-    </x-button>
+    </x-button> --}}
 
     <a href="{{ route('dashboard') }}">
         <x-application-logo aria-hidden="true" class="w-10 h-10" />

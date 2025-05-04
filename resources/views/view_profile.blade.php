@@ -19,17 +19,17 @@
         @if ($post_info->isNotEmpty())
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 py-3">
                 @foreach ($post_info as $file)
-                    <div class="{{ $file->pricing == 'premium' ? 'bg-yellow-500' : 'bg-blue-500' }} p-4 rounded-lg">
-                        <p class="text-gray-200 text-md text-right uppercase mb-2">{{ $file->pricing }}</p>
-                        <div class="{{ $file->pricing == 'premium' ? 'bg-yellow-600' : 'bg-blue-600' }} p-4 rounded-lg text-center"> 
+                    <div class="bg-gray-200 dark:bg-dark-eval-0 p-4 rounded-lgp-4 rounded-lg">
+                        <p class="rounded-md px-2 mb-2 text-sm text-right uppercase {{ $file->pricing == 'exclusive' ? 'text-blue-500 ' : 'text-green-500 ' }}">{{ $file->pricing }}</p>
+                        <div class="bg-white dark:bg-dark-eval-1 p-4 rounded-lg text-center"> 
                             <img src="{{ asset('uploads/' . $file->thumbnail) }}" alt="Latest Upload" 
-                                class="w-28 h-28 object-cover mx-auto rounded-lg mt-2  {{ $file->pricing == 'premium' ? 'blur-md' : '' }}" 
+                                class="w-28 h-28 object-cover mx-auto rounded-lg mt-2  {{ $file->pricing == 'exclusive' ? 'blur-md' : '' }}" 
                                 >
                         </div>
                         {{-- @php
                             $fileCount = count(json_decode($file->file_name));
                         @endphp --}}
-                        <p class="text-white font-bold text-center mt-2">{{ $file->title }}</p>
+                        <p class="font-bold text-center mt-2">{{ $file->title }}</p>
                     
                     </div>
                 @endforeach

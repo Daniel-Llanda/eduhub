@@ -15,7 +15,13 @@ class Comment extends Model
     public function post(){
         return $this->belongsTo(Post::class, 'post_id');
     }
+    // App\Models\Comment.php
+    public function replies(){
+        return $this->hasMany(Reply::class);
+    }
+    
 
+    
 
 
 }

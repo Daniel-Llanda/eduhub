@@ -20,13 +20,18 @@ class DatabaseSeeder extends Seeder
             'name' => 'Administrator',
             'email' => 'admin@gmail.com',
         ]);
+       
         \App\Models\User::factory()->create([
-            'name' => 'Daniel Llanda',
-            'email' => 'daniel@gmail.com',
+            'name' => 'Shajib Milon',
+            'email' => 'shajib@gmail.com',
         ]);
         \App\Models\User::factory()->create([
-            'name' => 'Gwen Salut',
-            'email' => 'gwen@gmail.com',
+            'name' => 'Ray Mamuad',
+            'email' => 'ray@gmail.com',
+        ]);
+        \App\Models\User::factory()->create([
+            'name' => 'Ryan Dador',
+            'email' => 'ryan@gmail.com',
         ]);
         \App\Models\Teacher::factory()->create([
             'name' => 'Teacher one',

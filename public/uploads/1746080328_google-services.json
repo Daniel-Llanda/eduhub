@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "899699610627",
+    "project_id": "crochetapp-3c10c",
+    "storage_bucket": "crochetapp-3c10c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899699610627:android:9fecb54830616ce8b6ea36",
+        "android_client_info": {
+          "package_name": "crochetapp.com"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEjQjz1OtC0okpi6_JfW3uv2ccNFIgO3k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

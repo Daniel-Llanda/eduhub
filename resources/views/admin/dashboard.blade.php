@@ -112,6 +112,7 @@
     @php
         $usersCount = $users->count();
         $teachersCount = $teachers->count();
+        $postsCount = $posts->count();
     @endphp
     <div class="row">
         <div class="col-xl-3 col-md-6">
@@ -119,17 +120,17 @@
                 <div class="card-body display-4 text-center">{{$usersCount}}</div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
                     <span class="small text-white">Student</span>
-                    <a class="small text-white stretched-link" href="#">View Details</a>
+                    {{-- <a class="small text-white stretched-link" href="#">View Details</a> --}}
                     
                 </div>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="card bg-warning text-white mb-4">
-                <div class="card-body display-4 text-center">20</div>
+                <div class="card-body display-4 text-center">{{$postsCount}}</div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
                     <span class="small text-white">Post</span>
-                    <a class="small text-white stretched-link" href="#">View Details</a>
+                    {{-- <a class="small text-white stretched-link" href="#">View Details</a> --}}
                     
                 </div>
             </div>
@@ -139,21 +140,12 @@
                 <div class="card-body display-4 text-center">{{$teachersCount}}</div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
                     <span class="small text-white">Teacher</span>
-                    <a class="small text-white stretched-link" href="#">View Details</a>
+                    {{-- <a class="small text-white stretched-link" href="#">View Details</a> --}}
                     
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-danger text-white mb-4">
-                <div class="card-body display-4 text-center">9</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <span class="small text-white">Ban Student</span>
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    
-                </div>
-            </div>
-        </div>
+       
     </div>
     <div class="card mb-4">
         <div class="card-header">
@@ -208,10 +200,15 @@
                             </td>
                             <td>
                                 @php
-                                    $arrs = json_decode($user->teacher);
-                                    $teacherNames = \App\Models\Teacher::whereIn('id', $arrs)->pluck('name')->toArray();
-                                    echo implode(", ", $teacherNames);
+                                    $arrs = json_decode($user->teacher, true); // decode as array
+                                    if (is_array($arrs)) {
+                                        $teacherNames = \App\Models\Teacher::whereIn('id', $arrs)->pluck('name')->toArray();
+                                        echo implode(", ", $teacherNames);
+                                    } else {
+                                        echo 'No teachers assigned';
+                                    }
                                 @endphp
+                            
                             </td>
                         </tr>
                     @endforeach
